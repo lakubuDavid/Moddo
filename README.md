@@ -1,8 +1,8 @@
 # Why ?
 
 So I started experimenting with Go last week and decided that this would be a good fit as a test project because :
-- It as uses a lot of text manipulation in Go
-- It uses bascic data structures in Go
+- It as uses a lot of text manipulation 
+- It uses bascic data structures 
 - Also I use a lot of different different language with interaction between them in some projects and it was the tool I needed
 
 Anyway I will write a small doc later since it's still pretty early and I also need to add some comment (even though I believe the code is understandable...maybe)

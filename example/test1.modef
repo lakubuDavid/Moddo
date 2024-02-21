@@ -1,0 +1,17 @@
+# This is a comment
+package Models
+
+model User
+    id      int     @id
+    name    string
+    email   string
+    posts   string  @many
+    password string @writeonly
+    birthdate string @readonly
+
+model Car
+    id      int
+    owner   string
+    color   string
+    paint   gold
+    fuel    number

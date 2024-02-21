@@ -26,7 +26,7 @@ or if already built :
     - `java`,`java-props` : Java class, Java class with props
     - `py` : Python class
     - `php` : Php class
-- `--output-dir` : The output dir
+- `--output-dir` (optional): The output dir
 
 # Example model 
 

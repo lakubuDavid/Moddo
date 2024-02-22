@@ -58,8 +58,6 @@ model Car
 - `model MODEL_NAME` : begining of model definition
 - properties : `name type @modifier`
 
-> It's supposed to use the @many modifier (makes the parser easy)
->
 > Modifiers don't work except @many for collections/arrays (will write it later this week or if I ever retouch this code)
 
 ## Types

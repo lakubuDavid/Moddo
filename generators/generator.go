@@ -12,6 +12,7 @@ type Generator interface {
 
 	Extension() (string)
 	Name() (string)
+	// TypesMap() map[string]string
 }
 
 type GeneratorResult struct {

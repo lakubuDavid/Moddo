@@ -48,6 +48,8 @@ func generateModel(inputFile string, lang string, output_dir string) {
 		break
 	case "php":
 		gen.Generator = &generators.PhpGenerator{}
+	case "teal":
+		gen.Generator = &generators.LuaTealGenerator{}
 	default:
 		println("Unknown language :" + lang)
 		return

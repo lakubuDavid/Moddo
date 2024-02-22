@@ -8,13 +8,6 @@ type TsGenerator struct {
 	Definitions []parser.ModelDefinition
 }
 
-var ts_types_map = map[string]string{
-	"int":    "number",
-	"number": "number",
-	"string": "string",
-	"bool":   "boolean",
-}
-
 func (*TsGenerator) TypesMap() map[string]string {
 	return map[string]string{
 		"int":    "number",

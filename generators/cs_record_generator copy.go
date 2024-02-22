@@ -29,6 +29,9 @@ func (this *CSharpRecordGenerator) AddModelAttribute(result *GeneratorResult,att
 	if !ok {
 		_type = "object"
 	}
+	if attribute.HasQuantifier("many"){
+		_type+="[]"
+	}
 
 	result.Code += "" + _type + " " + strcase.ToCamel(attribute.Name) + ","
 }

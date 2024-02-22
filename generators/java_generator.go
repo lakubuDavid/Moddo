@@ -38,6 +38,9 @@ func (this *JavaGenerator) AddModelAttribute(result *GeneratorResult,attribute p
 	if !ok {
 		_type = "Object"
 	}
+	if attribute.HasQuantifier("many"){
+		_type+="[]"
+	}
 
 	result.Code += "\tpublic " + _type + " " + attribute.Name + ";\n"
 }

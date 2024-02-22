@@ -10,6 +10,34 @@ type ParserContext struct {
 	FileName string
 }
 
+var ValidQualifiers = []string{
+	"id", "optional", "readonly", "writeonly",
+}
+
+var ValidQuantifiers = []string{
+	"many",
+}
+
+func IsQualifier(modifier string)(bool){
+	for _, m := range ValidQualifiers {
+		if modifier == m {
+			return true
+		}
+	}
+	return false
+}
+func IsQuantifier(modifier string)(bool){
+	for _, m := range ValidQuantifiers {
+		if modifier == m {
+			return true
+		}
+	}
+	return false
+}
+func IsValidModifier(modifier string) bool {
+	return IsQualifier(modifier) || IsQuantifier(modifier)
+}
+
 func TrimExtension(fileName string) string {
 	return fileName[:len(fileName)-len(filepath.Ext(fileName))]
 }
@@ -53,9 +81,9 @@ func Parse(code string, ctx ParserContext) []ModelDefinition {
 				att.Name = words[0]
 				att.Type = words[1]
 
-				ParseModifiers(&att,words[2:],ctx)
+				ParseModifiers(&att, words[2:], ctx)
 
-				fmt.Printf("\tAdded attribute %s (%s)\n", att.Name, att.Type)
+				fmt.Printf("\tAdded attribute %s (%s) %s %s\n", att.Name, att.Type,att.Quantifiers,att.Qualifiers)
 				current_model.Attributes = append(current_model.Attributes, att)
 			}
 		} else if strings.HasPrefix(line, "package") {
@@ -63,7 +91,7 @@ func Parse(code string, ctx ParserContext) []ModelDefinition {
 			if len(words) >= 2 {
 				packageName = words[1]
 			}
-		} else if strings.HasPrefix(line,"#"){
+		} else if strings.HasPrefix(line, "#") {
 			continue
 		}
 	}
@@ -76,10 +104,17 @@ func Parse(code string, ctx ParserContext) []ModelDefinition {
 	return models
 }
 
-func ParseModifiers(attribute *ModelDefinitionAttribute,words []string,ctx ParserContext){
-	for _,word := range words {
-		if strings.HasPrefix(word,"@"){
-
+func ParseModifiers(attribute *ModelDefinitionAttribute, words []string, ctx ParserContext) {
+	for _, word := range words {
+		if strings.HasPrefix(word, "@") {
+			word = strings.TrimPrefix(word, "@")
+			if IsQualifier(word){
+				attribute.Qualifiers = append(attribute.Qualifiers,AttributeQualifier(word))
+			}else if IsQuantifier(word){
+				attribute.Quantifiers = append(attribute.Quantifiers, AttributeQuantifier(word))
+			}else{
+				continue
+			}
 		}
 	}
 }

@@ -37,7 +37,9 @@ func (this *TsGenerator) AddModelAttribute(result *GeneratorResult, attribute pa
 	if !ok {
 		_type = "any"
 	}
-
+	if attribute.HasQuantifier("many"){
+		_type+="[]"
+	}
 	result.Code += "\t" + attribute.Name + " : " + _type + "\n"
 }
 func (*TsGenerator) Name() string {

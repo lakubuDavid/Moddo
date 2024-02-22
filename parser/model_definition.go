@@ -42,17 +42,17 @@ func NewModelDefinitionAttribute()(ModelDefinitionAttribute){
 	return att
 }
 
-func (this *ModelDefinitionAttribute) HasQualifier(qualifier AttributeQualifier) (bool){
+func (this *ModelDefinitionAttribute) HasQualifier(qualifier string) (bool){
 	for _,q := range this.Qualifiers{
-		if q == qualifier{
+		if string(q) == qualifier{
 			return true
 		}
 	}
 	return false
 }
-func (this *ModelDefinitionAttribute) HasQuantifier(quantifier AttributeQuantifier) (bool){
+func (this *ModelDefinitionAttribute) HasQuantifier(quantifier string) (bool){
 	for _,q := range this.Quantifiers{
-		if q == quantifier{
+		if string(q) == quantifier{
 			return true
 		}
 	}

@@ -20,4 +20,4 @@
 # Go workspace file
 go.work
 
-example/out/*
+example/out/

@@ -24,8 +24,11 @@ func (g *PythonGenerator) BeginModel(result *GeneratorResult, definition parser.
     for _, attribute := range definition.Attributes {
         _type, ok := g.TypesMap()[attribute.Type]
         if !ok {
-            _type = "any"
+            _type = "object"
         }
+       	if attribute.HasQuantifier("many"){
+		_type="list["+_type+"]"
+	}
         result.Code += ", " + strcase.ToLowerCamel(attribute.Name) + ": " + _type
     }
     result.Code += "):\n"

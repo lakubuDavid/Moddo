@@ -40,6 +40,9 @@ func (this *JavaPropsGenerator) AddModelAttribute(result *GeneratorResult, attri
 	if !ok {
 		_type = "Object"
 	}
+	if attribute.HasQuantifier("many"){
+		_type+="[]"
+	}
 
 	privateName := strcase.ToLowerCamel(attribute.Name)
 	result.Code += "\tprivate " + _type + " " + privateName + ";\n\n"
@@ -52,14 +55,17 @@ func (this *JavaPropsGenerator) AddProps(result *GeneratorResult, private_name s
 	if !ok {
 		attribute_type = "object"
 	}
+	if attribute.HasQuantifier("many"){
+		attribute_type+="[]"
+	}
 
-	if !attribute.HasQualifier(parser.AttributeQualifierWriteOnly) {
+	if !attribute.HasQualifier("writeonly") {
 		result.Code += "\tpublic " + attribute_type + " get" + strcase.ToCamel(attribute.Name) + "() {\n"
 		result.Code += "\t\treturn " + private_name + ";\n"
 		result.Code += "\t}\n"
 	}
 
-	if !attribute.HasQualifier(parser.AttributeQualifierReadOnly) {
+	if !attribute.HasQualifier("readonly") {
 		result.Code += "\tpublic " + attribute_type + " set" + strcase.ToCamel(attribute.Name) + "(" + attribute_type + " value) {\n"
 		result.Code += "\t\t " + private_name + " = value;\n"
 		result.Code += "\t}\n"

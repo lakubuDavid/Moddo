@@ -38,7 +38,9 @@ func (this *CSharpGenerator) AddModelAttribute(result *GeneratorResult,attribute
 	if !ok {
 		_type = "object"
 	}
-
+	if attribute.HasQuantifier("many"){
+		_type+="[]"
+	}
 	result.Code += "\tpublic " + _type + " " + attribute.Name + ";\n"
 }
 

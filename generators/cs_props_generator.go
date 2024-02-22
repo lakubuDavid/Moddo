@@ -25,6 +25,9 @@ func (this *CSharpPropsGenerator) AddModelAttribute(result *GeneratorResult,attr
 	if !ok {
 		_type = "object"
 	}
+	if attribute.HasQuantifier("many"){
+		_type+="[]"
+	}
 
 	privateName := "_" + strcase.ToLowerCamel(attribute.Name)
 	result.Code += "\tprivate " + _type + " " +privateName + ";\n"

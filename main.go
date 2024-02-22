@@ -55,7 +55,7 @@ func generateModel(inputFile string, lang string, output_dir string) {
 	println("Using generator : " + gen.Generator.Name())
 
 	if output_dir == "" {
-		output_dir = filepath.Dir(inputFile) + "/" + gen.Generator.Name()
+		output_dir = filepath.Dir(inputFile) + "/out/" + gen.Generator.Name()
 	}
 
 	if _, err := os.Stat(output_dir); os.IsNotExist(err) {

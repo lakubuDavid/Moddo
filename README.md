@@ -26,6 +26,7 @@ or if already built :
     - `java`,`java-props` : Java class, Java class with props
     - `py` : Python class
     - `php` : Php class
+    - `teal` : Teal record, teal is superset of lua with types ,a little like typescript with javascript
 - `--output-dir` (optional): The output dir
 
 # Example model

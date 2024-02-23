@@ -4,6 +4,12 @@ import (
 	"com.lakubudavid/moddo/parser"
 )
 
+const (
+	NamingSchemeSnake = "snake"
+	NamingSchemeCamel = "camel"
+	NamingSchemeLowerCamel = "lowerCamel"
+)
+
 // "com.lakubudavid/moddo/parser"
 type Generator interface {
 	BeginModel(*GeneratorResult, parser.ModelDefinition)
@@ -12,7 +18,7 @@ type Generator interface {
 
 	Extension() (string)
 	Name() (string)
-	// TypesMap() map[string]string
+	FileCase() (string)
 }
 
 type GeneratorResult struct {

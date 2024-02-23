@@ -43,3 +43,7 @@ func (this *CSharpRecordGenerator) Extension() (string){
 func (*CSharpRecordGenerator) Name() (string){
 	return "csharp-record"
 }
+
+func (*CSharpRecordGenerator) FileCase() (string){
+	return NamingSchemeCamel
+}

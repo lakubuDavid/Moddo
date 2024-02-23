@@ -49,3 +49,7 @@ func (this *CSharpPropsGenerator) Extension() (string){
 func (*CSharpPropsGenerator) Name() (string){
 	return "csharp-with-props"
 }
+
+func (*CSharpPropsGenerator) FileCase() (string){
+	return NamingSchemeCamel
+}

@@ -15,3 +15,9 @@ model Car
     color   string
     paint   gold
     fuel    number
+
+model UserInfo
+    user_id int
+    car_id  int
+    weight  number
+    height  number

@@ -61,3 +61,7 @@ func (g *PhpGenerator) Extension() string {
 func (g *PhpGenerator) Name() string {
 	return "php"
 }
+
+func (*PhpGenerator) FileCase() (string){
+	return NamingSchemeLowerCamel
+}

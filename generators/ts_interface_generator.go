@@ -26,3 +26,7 @@ func (this *TsInterfaceGenerator) Extension() (string){
 func (*TsInterfaceGenerator) Name() (string){
 	return "typescript-interface"
 }
+
+func (*TsInterfaceGenerator)FileCase() (string){
+	return NamingSchemeLowerCamel
+}

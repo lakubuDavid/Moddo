@@ -80,3 +80,7 @@ func (*JavaPropsGenerator) Extension() string {
 func (*JavaPropsGenerator) Name() string {
 	return "java-with-props"
 }
+
+func (*JavaPropsGenerator) FileCase() (string){
+	return NamingSchemeCamel
+}

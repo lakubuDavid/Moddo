@@ -11,7 +11,7 @@ type LuaTealGenerator struct {
 
 func (*LuaTealGenerator) TypesMap() map[string]string {
 	return map[string]string{
-		"int":    "number",
+		"int":    "integer",
 		"number": "number",
 		"string": "string",
 		"bool":   "boolean",
@@ -42,4 +42,8 @@ func (*LuaTealGenerator) Name() string {
 
 func (*LuaTealGenerator) Extension() string {
 	return "tl"
+}
+
+func (*LuaTealGenerator) FileCase() (string){
+	return NamingSchemeCamel
 }

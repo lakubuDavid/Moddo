@@ -50,3 +50,7 @@ func (*CSharpGenerator) Extension() (string){
 func (*CSharpGenerator) Name() (string){
 	return "csharp"
 }
+
+func (*CSharpGenerator) FileCase() (string){
+	return NamingSchemeCamel
+}

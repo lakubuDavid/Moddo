@@ -42,3 +42,7 @@ func (*TsGenerator) Name() string {
 func (*TsGenerator) Extension() string {
 	return "ts"
 }
+
+func (*TsGenerator) FileCase() (string){
+	return NamingSchemeLowerCamel
+}

@@ -51,3 +51,6 @@ func (*JavaGenerator) Extension() (string){
 func (*JavaGenerator) Name() (string){
 	return "java"
 }
+func (*JavaGenerator) FileCase() (string){
+	return NamingSchemeCamel
+}

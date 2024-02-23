@@ -49,3 +49,7 @@ func (g *PythonGenerator) Extension() string {
 func (g *PythonGenerator) Name() string {
     return "python"
 }
+
+func (*PythonGenerator) FileCase() (string){
+	return NamingSchemeSnake
+}

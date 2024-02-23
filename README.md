@@ -66,6 +66,10 @@ model Car
 
 > Modifiers don't work for now except `@many` for collections/arrays (will write it later this week or if I ever retouch this code)
 
+While you can have multiple models in a single file they will be generated in separate files.
+Why ? Because it's easier and avoids having to check per language if I can or not put everything in a single file or ask if the user (you) want it in a signel file or not.
+It's all about simplicity here.
+
 ## Types
 Only basic primitive types :
 - int

@@ -2,6 +2,7 @@ package generators
 
 import (
 	"com.lakubudavid/moddo/parser"
+	"github.com/iancoleman/strcase"
 )
 
 type JavaGenerator struct {
@@ -41,8 +42,7 @@ func (this *JavaGenerator) AddModelAttribute(result *GeneratorResult,attribute p
 	if attribute.HasQuantifier("many"){
 		_type+="[]"
 	}
-
-	result.Code += "\tpublic " + _type + " " + attribute.Name + ";\n"
+	result.Code += "\tpublic " + _type + " " + strcase.ToCamel(attribute.Name) + ";\n"
 }
 
 func (*JavaGenerator) Extension() (string){

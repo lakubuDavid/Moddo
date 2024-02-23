@@ -2,6 +2,7 @@ package generators
 
 import (
 	"com.lakubudavid/moddo/parser"
+	"github.com/iancoleman/strcase"
 )
 
 type TsGenerator struct {
@@ -33,7 +34,7 @@ func (this *TsGenerator) AddModelAttribute(result *GeneratorResult, attribute pa
 	if attribute.HasQuantifier("many"){
 		_type+="[]"
 	}
-	result.Code += "\t" + attribute.Name + " : " + _type + "\n"
+	result.Code += "\t" + strcase.ToLowerCamel(attribute.Name) + " : " + _type + "\n"
 }
 func (*TsGenerator) Name() string {
 	return "typescript-class"

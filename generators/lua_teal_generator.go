@@ -2,6 +2,7 @@ package generators
 
 import (
 	"com.lakubudavid/moddo/parser"
+	"github.com/iancoleman/strcase"
 )
 
 type LuaTealGenerator struct {
@@ -34,7 +35,7 @@ func (this *LuaTealGenerator) AddModelAttribute(result *GeneratorResult, attribu
 	if attribute.HasQuantifier("many"){
 		_type="{"+_type+"}"
 	}
-	result.Code += "\t" + attribute.Name + " : " + _type + "\n"
+	result.Code += "\t" + strcase.ToLowerCamel(attribute.Name) + " : " + _type + "\n"
 }
 func (*LuaTealGenerator) Name() string {
 	return "lua-teal"

@@ -19,7 +19,7 @@ func (*TsGenerator) TypesMap() map[string]string {
 }
 
 func (*TsGenerator) BeginModel(result *GeneratorResult, definition parser.ModelDefinition) {
-	result.Code += "class " + definition.Name + "{\n"
+	result.Code += "export class " + definition.Name + "{\n"
 }
 
 func (*TsGenerator) EndModel(result *GeneratorResult, definition parser.ModelDefinition) {

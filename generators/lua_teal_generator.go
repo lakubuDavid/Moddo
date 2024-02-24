@@ -46,5 +46,5 @@ func (*LuaTealGenerator) Extension() string {
 }
 
 func (*LuaTealGenerator) FileCase() (string){
-	return NamingSchemeCamel
+	return NamingSchemeLowerCamel
 }

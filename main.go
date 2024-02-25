@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 	"strings"
-
+	"com.lakubudavid/moddo/moddo"
 )
 
 func parseArgs(args []string) map[string]string {
@@ -28,7 +28,7 @@ func main() {
 	input := argsWithoutProg[0]
 	configs := parseArgs(argsWithoutProg[1:])
 
-	moddo := Moddo{}
+	moddo := moddo.GetInstance()
 	moddo.Init(configs)
 	moddo.GeneratePackage(input)
 

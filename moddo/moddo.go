@@ -1,4 +1,4 @@
-package main
+package moddo
 
 import (
 	"fmt"
@@ -23,6 +23,15 @@ import (
 type Moddo struct {
 	Configuration      map[string]string
 	GeneratorContainer generators.GeneratorContainer
+}
+
+var instance *Moddo
+
+func GetInstance() (*Moddo){
+	if instance == nil{
+		instance = new(Moddo)
+	}
+	return instance
 }
 
 func (m *Moddo) Init(config map[string]string) {

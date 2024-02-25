@@ -32,13 +32,24 @@ func (this *CSharpPropsGenerator) AddModelAttribute(result *GeneratorResult,attr
 	privateName := "_" + strcase.ToLowerCamel(attribute.Name)
 	result.Code += "\tprivate " + _type + " " +privateName + ";\n"
 
-	this.AddProps(result,privateName,attribute.Name,_type)
+	this.AddProps(result,privateName,attribute)
 }
 
-func (this *CSharpPropsGenerator) AddProps(result *GeneratorResult,private_name string,name string,attribute_type string){
-	result.Code += "\tpublic "+attribute_type+" "+strcase.ToCamel(name)+" {\n"
-	result.Code += "\t\tget => "+private_name+";\n"
+func (this *CSharpPropsGenerator) AddProps(result *GeneratorResult,private_name string,attribute parser.ModelDefinitionAttribute){
+	attribute_type, ok := this.CSharpGenerator.TypesMap()[attribute.Type]
+	if !ok {
+		attribute_type = "object"
+	}
+	if attribute.HasQuantifier("many"){
+		attribute_type+="[]"
+	}
+	result.Code += "\tpublic "+attribute_type+" "+strcase.ToCamel(attribute.Name)+" {\n"
+	if !attribute.HasQualifier("writeonly"){
+		result.Code += "\t\tget => "+private_name+";\n"
+	}
+	if !attribute.HasQualifier("readonly"){
 	result.Code += "\t\tset => "+private_name+" = value ;\n"
+	}
 	result.Code += "\t}\n\n"
 }
 

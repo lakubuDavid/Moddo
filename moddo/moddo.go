@@ -1,10 +1,13 @@
-package main
+package moddo
 
 import (
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
+	"sync"
+	// "time"
+
 	// "strings"
 
 	"com.lakubudavid/moddo/generators"
@@ -22,12 +25,21 @@ type Moddo struct {
 	GeneratorContainer generators.GeneratorContainer
 }
 
+var instance *Moddo
+
+func GetInstance() (*Moddo){
+	if instance == nil{
+		instance = new(Moddo)
+	}
+	return instance
+}
+
 func (m *Moddo) Init(config map[string]string) {
 	m.Configuration = config
 }
 
-func (m *Moddo) CorrectFileNameCase(file_name string) (string) {
-	filecase,ok := m.Configuration["file-case"]
+func (m *Moddo) CorrectFileNameCase(file_name string) string {
+	filecase, ok := m.Configuration["file-case"]
 	if !ok {
 		filecase = m.GeneratorContainer.Generator.FileCase()
 	}
@@ -101,13 +113,21 @@ func (m *Moddo) GeneratePackage(input_file string) {
 	if err != nil {
 		panic(err)
 	}
+
+	var wg sync.WaitGroup
+	wg.Add(len(results))
+
 	for _, res := range results {
-		m.GenerateModel(res)
+		go func(wg *sync.WaitGroup) {
+			defer wg.Done()
+			m.GenerateModel(res)
+		}(&wg)
 	}
+
+	wg.Wait()
 }
 
 func (m *Moddo) GenerateModel(result generators.GeneratorResult) {
-
 	err := os.WriteFile(fmt.Sprintf("%s/%s.%s",
 		m.Configuration["output-dir"],
 		m.CorrectFileNameCase(result.Name),

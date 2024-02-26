@@ -5,7 +5,11 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+<<<<<<< HEAD
 	// "sync"
+=======
+	"sync"
+>>>>>>> master
 	// "time"
 
 	// "strings"
@@ -28,6 +32,7 @@ type Moddo struct {
 
 var instance *Moddo
 
+<<<<<<< HEAD
 func GetInstance() *Moddo {
 	if instance == nil {
 		instance = new(Moddo)
@@ -40,6 +45,19 @@ func (m *Moddo) Init(config map[string]string) {
 	m.Parser = parser.Parser{}
 }
 
+=======
+func GetInstance() (*Moddo){
+	if instance == nil{
+		instance = new(Moddo)
+	}
+	return instance
+}
+
+func (m *Moddo) Init(config map[string]string) {
+	m.Configuration = config
+}
+
+>>>>>>> master
 func (m *Moddo) CorrectFileNameCase(file_name string) string {
 	filecase, ok := m.Configuration["file-case"]
 	if !ok {
@@ -148,10 +166,46 @@ func (m *Moddo) InitGenerator() {
 	}
 
 	println("Using generator : " + m.GeneratorContainer.Generator.Name())
+<<<<<<< HEAD
 }
 
 func (m *Moddo) GenerateModel(result generators.GeneratorResult) {
 	output_file := fmt.Sprintf("%s/%s.%s",
+=======
+
+	_, output_ok := m.Configuration["output-dir"]
+	if !output_ok {
+		m.Configuration["output-dir"] = filepath.Dir(input_file) + "/out/" + m.GeneratorContainer.Generator.Name()
+	}
+	if _, err := os.Stat(m.Configuration["output-dir"]); os.IsNotExist(err) {
+		if err := os.MkdirAll(m.Configuration["output-dir"], os.ModePerm); err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	definitions := parser.Parse(string(file), parser.ParserContext{FileName: input_file})
+
+	results, err := m.GeneratorContainer.Build(definitions)
+	if err != nil {
+		panic(err)
+	}
+
+	var wg sync.WaitGroup
+	wg.Add(len(results))
+
+	for _, res := range results {
+		go func(wg *sync.WaitGroup) {
+			defer wg.Done()
+			m.GenerateModel(res)
+		}(&wg)
+	}
+
+	wg.Wait()
+}
+
+func (m *Moddo) GenerateModel(result generators.GeneratorResult) {
+	err := os.WriteFile(fmt.Sprintf("%s/%s.%s",
+>>>>>>> master
 		m.Configuration["output-dir"],
 		m.CorrectFileNameCase(result.Name),
 		m.GeneratorContainer.Generator.Extension())

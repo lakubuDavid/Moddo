@@ -30,3 +30,7 @@ func (*TsInterfaceGenerator) Name() (string){
 func (*TsInterfaceGenerator)FileCase() (string){
 	return NamingSchemeLowerCamel
 }
+
+func (this *TsInterfaceGenerator) TypesMap() map[string]string{
+	return this.TS.TypesMap()
+}

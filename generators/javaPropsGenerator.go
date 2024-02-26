@@ -17,13 +17,8 @@ type JavaPropsGenerator struct {
 // 	"bool":   "bool",
 // }
 
-func (*JavaPropsGenerator) TypesMap() map[string]string {
-	return map[string]string{
-		"int":    "int",
-		"number": "float",
-		"string": "String",
-		"bool":   "boolean",
-	}
+func (this *JavaPropsGenerator) TypesMap() map[string]string {
+	return this.JavaGenerator.TypesMap()
 }
 
 func (*JavaPropsGenerator) BeginModel(result *GeneratorResult, definition parser.ModelDefinition) {

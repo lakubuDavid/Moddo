@@ -19,6 +19,7 @@ type Generator interface {
 	Extension() (string)
 	Name() (string)
 	FileCase() (string)
+	TypesMap() map[string]string
 }
 
 type GeneratorResult struct {
@@ -28,6 +29,22 @@ type GeneratorResult struct {
 
 type GeneratorContainer struct {
 	Generator Generator
+}
+
+func CheckGenerator(gen Generator) (bool){
+	if gen.TypesMap()["string"] == ""{
+		panic(gen.Name()+" generator : string type not defined")
+	}
+	if gen.TypesMap()["int"] == ""{
+		panic(gen.Name()+" generator : string type not defined")
+	}
+	if gen.TypesMap()["number"] == ""{
+		panic(gen.Name()+" generator : string type not defined")
+	}
+	if gen.TypesMap()["bool"] == ""{
+		panic(gen.Name()+" generator : string type not defined")
+	}
+	return true
 }
 
 func (gen *GeneratorContainer) Build(definitions []parser.ModelDefinition) ([]GeneratorResult, error) {

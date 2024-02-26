@@ -64,3 +64,7 @@ func (*CSharpPropsGenerator) Name() (string){
 func (*CSharpPropsGenerator) FileCase() (string){
 	return NamingSchemeCamel
 }
+
+func (this *CSharpPropsGenerator) TypesMap() map[string]string{
+	return this.CSharpGenerator.TypesMap()
+}

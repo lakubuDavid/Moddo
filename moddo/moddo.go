@@ -5,7 +5,11 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+<<<<<<< HEAD
+	// "sync"
+=======
 	"sync"
+>>>>>>> master
 	// "time"
 
 	// "strings"
@@ -21,12 +25,27 @@ import (
 //	--file-case
 
 type Moddo struct {
+	Parser parser.Parser
 	Configuration      map[string]string
 	GeneratorContainer generators.GeneratorContainer
 }
 
 var instance *Moddo
 
+<<<<<<< HEAD
+func GetInstance() *Moddo {
+	if instance == nil {
+		instance = new(Moddo)
+	}
+	return instance
+}
+
+func (m *Moddo) Init(config map[string]string) {
+	m.Configuration = config
+	m.Parser = parser.Parser{}
+}
+
+=======
 func GetInstance() (*Moddo){
 	if instance == nil{
 		instance = new(Moddo)
@@ -38,6 +57,7 @@ func (m *Moddo) Init(config map[string]string) {
 	m.Configuration = config
 }
 
+>>>>>>> master
 func (m *Moddo) CorrectFileNameCase(file_name string) string {
 	filecase, ok := m.Configuration["file-case"]
 	if !ok {
@@ -62,7 +82,52 @@ func (m *Moddo) GeneratePackage(input_file string) {
 		return
 	}
 
+	m.InitGenerator()
+	m.Parser.Context.FileName = input_file
+
+	definitions := m.Parser.Parse(string(file))
+
+	if len(definitions) < 1 {
+		println("No model defined")
+		return
+	}
+
+	results, err := m.GeneratorContainer.Build(definitions)
+	if err != nil {
+		panic(err)
+	}
+
+	_, output_ok := m.Configuration["output-dir"]
+	if !output_ok {
+		m.Configuration["output-dir"] = filepath.Dir(input_file) + "/"+
+			m.GeneratorContainer.Generator.Name() +
+			"/" +
+			definitions[0].PackageName
+	}
+	if _, err := os.Stat(m.Configuration["output-dir"]); os.IsNotExist(err) {
+		if err := os.MkdirAll(m.Configuration["output-dir"], os.ModePerm); err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	// var wg sync.WaitGroup
+	// wg.Add(len(results))
+
+	for _, res := range results {
+		// go func(wg *sync.WaitGroup) {
+			// defer wg.Done()
+			m.GenerateModel(res)
+		// }(&wg)
+	}
+
+	// wg.Wait()
+}
+
+func (m *Moddo) InitGenerator() {
 	switch m.Configuration["lang"] {
+	case "go":
+		m.GeneratorContainer.Generator = (&generators.GoGenerator{})
+		break
 	case "ts":
 		m.GeneratorContainer.Generator = &generators.TsGenerator{}
 		break
@@ -95,7 +160,18 @@ func (m *Moddo) GeneratePackage(input_file string) {
 		println("Unknown language :" + m.Configuration["lang"])
 		return
 	}
+
+	if m.GeneratorContainer.Generator != nil {
+		generators.CheckGenerator(m.GeneratorContainer.Generator)
+	}
+
 	println("Using generator : " + m.GeneratorContainer.Generator.Name())
+<<<<<<< HEAD
+}
+
+func (m *Moddo) GenerateModel(result generators.GeneratorResult) {
+	output_file := fmt.Sprintf("%s/%s.%s",
+=======
 
 	_, output_ok := m.Configuration["output-dir"]
 	if !output_ok {
@@ -129,9 +205,12 @@ func (m *Moddo) GeneratePackage(input_file string) {
 
 func (m *Moddo) GenerateModel(result generators.GeneratorResult) {
 	err := os.WriteFile(fmt.Sprintf("%s/%s.%s",
+>>>>>>> master
 		m.Configuration["output-dir"],
 		m.CorrectFileNameCase(result.Name),
-		m.GeneratorContainer.Generator.Extension()),
+		m.GeneratorContainer.Generator.Extension())
+	println("output : "+output_file)
+	err := os.WriteFile(output_file,
 		[]byte(result.Code), 0666)
 	if err != nil {
 		print("Error : ")

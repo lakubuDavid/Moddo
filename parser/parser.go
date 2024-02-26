@@ -10,6 +10,10 @@ type ParserContext struct {
 	FileName string
 }
 
+type Parser struct {
+	Context ParserContext
+}
+
 var ValidQualifiers = []string{
 	"id", "optional", "readonly", "writeonly",
 }
@@ -42,9 +46,9 @@ func TrimExtension(fileName string) string {
 	return fileName[:len(fileName)-len(filepath.Ext(fileName))]
 }
 
-func Parse(code string, ctx ParserContext) []ModelDefinition {
+func (p *Parser) Parse(code string) []ModelDefinition {
 	//1. Split in lines
-
+	ctx := p.Context
 	lines := strings.Split(code, "\n")
 
 	models := make([]ModelDefinition, 0)
@@ -81,7 +85,7 @@ func Parse(code string, ctx ParserContext) []ModelDefinition {
 				att.Name = words[0]
 				att.Type = words[1]
 
-				ParseModifiers(&att, words[2:], ctx)
+				p.ParseModifiers(&att, words[2:], ctx)
 
 				fmt.Printf("\tAdded attribute %s (%s) %s %s\n", att.Name, att.Type,att.Quantifiers,att.Qualifiers)
 				current_model.Attributes = append(current_model.Attributes, att)
@@ -104,7 +108,7 @@ func Parse(code string, ctx ParserContext) []ModelDefinition {
 	return models
 }
 
-func ParseModifiers(attribute *ModelDefinitionAttribute, words []string, ctx ParserContext) {
+func (*Parser) ParseModifiers(attribute *ModelDefinitionAttribute, words []string, ctx ParserContext) {
 	for _, word := range words {
 		if strings.HasPrefix(word, "@") {
 			word = strings.TrimPrefix(word, "@")

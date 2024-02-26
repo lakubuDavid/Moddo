@@ -10,7 +10,7 @@ type TsInterfaceGenerator struct {
 }
 
 func (*TsInterfaceGenerator) BeginModel(result *GeneratorResult,definition parser.ModelDefinition){
-	result.Code += "interface " + definition.Name + "{\n"
+	result.Code += "export interface " + definition.Name + "{\n"
 }
 
 func (this *TsInterfaceGenerator) EndModel(result *GeneratorResult,definition parser.ModelDefinition){
@@ -29,4 +29,8 @@ func (*TsInterfaceGenerator) Name() (string){
 
 func (*TsInterfaceGenerator)FileCase() (string){
 	return NamingSchemeLowerCamel
+}
+
+func (this *TsInterfaceGenerator) TypesMap() map[string]string{
+	return this.TS.TypesMap()
 }

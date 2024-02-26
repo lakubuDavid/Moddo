@@ -47,3 +47,7 @@ func (*CSharpRecordGenerator) Name() (string){
 func (*CSharpRecordGenerator) FileCase() (string){
 	return NamingSchemeCamel
 }
+
+func (this *CSharpRecordGenerator) TypesMap() map[string]string{
+	return this.CSharpGenerator.TypesMap()
+}

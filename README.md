@@ -1,3 +1,4 @@
+![Noon logo](assets/img/noon-logo.png)
 # Why ?
 
 So I started experimenting with Go last week and decided that this would be a good fit as a test project because :

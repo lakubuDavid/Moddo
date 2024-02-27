@@ -3,10 +3,6 @@ package main
 import (
 	"os"
 	"strings"
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 	"com.lakubudavid/moddo/moddo"
 )
 
@@ -32,11 +28,8 @@ func main() {
 	input := argsWithoutProg[0]
 	configs := parseArgs(argsWithoutProg[1:])
 
-<<<<<<< HEAD
 	moddo := moddo.Moddo{}
-=======
-	moddo := moddo.GetInstance()
->>>>>>> master
+
 	moddo.Init(configs)
 	moddo.GeneratePackage(input)
 

@@ -89,7 +89,7 @@ Only basic primitive types :
 
 - [x] Generate base classes
 - [x] Have the `@many` modifier work
-- [ ] Have the `@readonly` and `@writeonly` work for generators with properties like `java-props` and `cs-props`
+- [x] Have the `@readonly` and `@writeonly` work for generators with properties like `java-props` and `cs-props`
 - [ ] Some new ideas...
 
 # Wanna help ?

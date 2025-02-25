@@ -82,7 +82,7 @@ Only basic primitive types :
 
 # What doesn't work
 
-- Modifiers are useless for now except `@many`
+- Modifiers are useless for now except `@many`,`@readonlly` and `@writeonly`
 - Only basic types
 
 # The goal
@@ -103,5 +103,5 @@ At least not now, but you can look at the code and get inspired from it.
 - God
 - My bed
 - Youtube
-- Perplexity & ChatGPT
+- Perplexity & ChatGPT (Great for learning quick)
 - My fan (it's getting really hot here)
